@@ -6,8 +6,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Random;
 /*
 <applet code="Main" width=600 height=600>
 </applet>
@@ -21,9 +23,19 @@ class Pair
 		first = a;
 		second = b;
 	}
+	Pair(String input)
+	{
+		StringTokenizer st = new StringTokenizer(input, ",");
+		first = Integer.parseInt(st.nextToken());
+		second = Integer.parseInt(st.nextToken());
+	}
+	public String toString()
+	{
+		return new Integer(first).toString()+","+new Integer(second).toString();
+	}
 }
 
-public class Main extends Applet implements MouseMotionListener, Runnable
+public class Main extends Applet implements MouseMotionListener,MouseListener,  Runnable
 {
 
 	public int padx;
@@ -48,55 +60,67 @@ public class Main extends Applet implements MouseMotionListener, Runnable
 	public Image ballBufferPrevious;
 	public int blockSetWidth = 400;
 	public int blockSetHeight = 240;
-	public HashMap <Pair, Color> blockMap;
+	public HashMap <String, Color> blockMap;
 	public int ballX;
 	public int ballY;
 	public int ballPreviousX;
 	public int ballPreviousY;
 	public boolean ballStarted = false;
 	public int ballDiameter = 15;
+    public Random generator;
+    double angle;
+    int unit = 8;
+    double pi = 22.0/7;
+    
 	public void init() {
-		 blockMap = new HashMap <Pair, Color>();
+		 blockMap = new HashMap <String, Color>();
 
 		this.resize(600,600);
 		this.setMaximumSize(new Dimension(600,600));
 		addMouseMotionListener(this);	
+		addMouseListener(this);
+		generator = new Random();
 		int x, y;
 		int count = 0;
-        padBuffer=createImage(MaxX,padHeight);
+		//angle = generator.nextDouble() * 180; // a random start angle
+        angle = 115.0;
+		padBuffer=createImage(MaxX,padHeight);
         blockBuffer=createImage(blockSetWidth,blockSetHeight);
         ballBuffer = createImage(ballDiameter, ballDiameter);
         ballBufferPrevious = createImage(ballDiameter, ballDiameter);
 
+        System.out.println("Pairs");
 		for(x=0; x< blockSetWidth; x+=blockLength)
 		{
 			for(y = 0; y<blockSetHeight; y+=blockHeight)
 			{
 				count ++;
 				if(count%7 == 0)
-					blockMap.put(new Pair(x,y), Color.BLUE );
+					blockMap.put(new Pair(x,y).toString(), Color.BLUE );
 				if(count%7 == 1)
-					blockMap.put(new Pair(x,y), Color.CYAN );
+					blockMap.put(new Pair(x,y).toString(), Color.CYAN );
 				if(count%7 == 2)
-					blockMap.put(new Pair(x,y), Color.RED );
+					blockMap.put(new Pair(x,y).toString(), Color.RED );
 				if(count%7 == 3)
-					blockMap.put(new Pair(x,y), Color.GREEN );
+					blockMap.put(new Pair(x,y).toString(), Color.GREEN );
 				if(count%7 == 4)
-					blockMap.put(new Pair(x,y), Color.ORANGE );
+					blockMap.put(new Pair(x,y).toString(), Color.ORANGE );
 				if(count%7 == 5)
-					blockMap.put(new Pair(x,y), Color.MAGENTA );
+					blockMap.put(new Pair(x,y).toString(), Color.MAGENTA );
 				if(count%7 == 6)
-					blockMap.put(new Pair(x,y), Color.PINK );
+					blockMap.put(new Pair(x,y).toString(), Color.PINK );
 				
-				
+				System.out.println(x+ " "  + y + "#");
 			}
 			
 		}
+        System.out.println("Route");
+
 		repaintBlocks = true;
 		repaint();
 	    Thread t = new Thread(this, "Ball thread");
 	    t.start();
-	    
+
 	}
 	@Override
 	public void mouseDragged(MouseEvent me) {
@@ -109,13 +133,14 @@ public class Main extends Applet implements MouseMotionListener, Runnable
     public void mouseClicked(MouseEvent e) {
     	ballStarted = true;
     	msg = "mous Doen";
-    	System.out.println("Mouse down");
+    	//System.out.println("Mouse down");
 		repaint();
 
     }
+    
     public void mousePressed(MouseEvent e) {
     	ballStarted = true;
-    	System.out.println("Mouse down 2");
+    	//System.out.println("Mouse down 2");
     	msg = "mous Doen 2";
 		repaint();
 
@@ -127,6 +152,7 @@ public class Main extends Applet implements MouseMotionListener, Runnable
 		pady = padTop;
 		repaint();
 	}
+	
 	public void update(Graphics g){
         paint(g); //keep what was there before
 	}
@@ -162,17 +188,17 @@ public class Main extends Applet implements MouseMotionListener, Runnable
 			calculatedLeft = 600  - padLength;
 		}
 	    g.drawImage(padBuffer,0,padTop, null);
-	    g.drawString(msg, 50, 50);
+	   // g.drawString(msg, 50, 50);
 		// Drawing Blocks
 		
-		    Iterator<Entry<Pair, Color>> it = blockMap.entrySet().iterator();
+		    Iterator<Entry<String, Color>> it = blockMap.entrySet().iterator();
 		    blockGraphics.setColor(Color.WHITE);
 	        blockGraphics.fillRect(0, 0, blockSetWidth,blockSetHeight); // whole line white
 		    while (it.hasNext()) {
-		        Map.Entry<Pair, Color> pairs = (Map.Entry<Pair, Color>)it.next();
-		        Pair coordinate = pairs.getKey();
+		        Map.Entry<String, Color> pairs = (Map.Entry<String, Color>)it.next();
+		        String coordinate = pairs.getKey();
 		        blockGraphics.setColor(pairs.getValue());
-		        blockGraphics.fillRect(coordinate.first, coordinate.second, blockLength, blockHeight);
+		        blockGraphics.fillRect(new Pair(coordinate).first, new Pair(coordinate).second, blockLength, blockHeight);
 		    }
 		    if(repaintBlocks){
 		    	g.drawImage(blockBuffer,blockStartX,blockStartY, null);
@@ -187,6 +213,7 @@ public class Main extends Applet implements MouseMotionListener, Runnable
 	        ballGraphics.fillOval(0, 0, ballDiameter,ballDiameter); // whole line white
 	    	g.drawImage(ballBuffer,ballX,ballY, null);
 
+	    	
 	}
 	@Override
 	public void run() {
@@ -196,7 +223,7 @@ public class Main extends Applet implements MouseMotionListener, Runnable
 			 simulateBall();
 	         repaint();   
 	         try {
-	                Thread.sleep(10);
+	                Thread.sleep(15);
 	            } catch (InterruptedException ex) {
 	                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
 	            }
@@ -211,6 +238,74 @@ public class Main extends Applet implements MouseMotionListener, Runnable
 			ballX = padx - ballDiameter/2;
 			ballY = padTop - ballDiameter;
 		}
+		else{
+				ballX = ballX + (int) (Math.cos((angle * pi)/180.0) * unit);
+				ballY = ballY - (int) (Math.sin((angle * pi)/180.0) * unit); // Y increases downward
+				
+				int xBlockLeft = (ballX / 20)*20 - blockStartX;
+				int yBlockLeft = ((ballY + ballDiameter/2) / 10)*10 - blockStartY;
+				
+				//Left Boundary Edge
+				Pair temp = new Pair(xBlockLeft, yBlockLeft);
+				if(blockMap.containsKey(temp.toString()) || ballX<=0){
+					System.out.println("Left edge");
+					angle = 180.0 - angle;
+					blockMap.remove(temp.toString());
+					repaintBlocks = true;
+					return;
+				}
+				
+				int xBlockRight = ((ballX + ballDiameter) / 20)*20 - blockStartX;
+				int yBlockRight = ((ballY + ballDiameter/2) / 10)*10 - blockStartY;
+				
+				//Right Boundary Edge
+				temp = new Pair(xBlockRight, yBlockRight);
+				if(blockMap.containsKey(temp.toString()) || ballX >=MaxX){
+					System.out.println("Right edge");
+					angle = 180.0 - angle;
+					blockMap.remove(temp.toString());
+					repaintBlocks = true;
+					return;
+				}
+				
+				int xBlockTop = ((ballX + ballDiameter/2) / 20)*20 - blockStartX;
+				int yBlockTop = (ballY / 10)*10 - blockStartY;
+				//top Boundary Edge
+				temp = new Pair(xBlockTop, yBlockTop);
+				if(blockMap.containsKey(temp.toString()) || ballY <=0){
+					System.out.println("Top edge");
+					angle = 360.0 - angle;
+					blockMap.remove(temp.toString());
+					repaintBlocks = true;
+					return;
+				}
+				
+				int xBlockBottom = ((ballX + ballDiameter/2) / 20)*20 - blockStartX;
+				int yBlockBottom = ((ballY + ballDiameter) / 10)*10 - blockStartY;
+				//top Boundary Edge
+				temp = new Pair(xBlockBottom, yBlockBottom);
+				if(blockMap.containsKey(temp.toString()) || ((ballY + ballDiameter) >=padTop && (ballY+ballDiameter) <=padBottom && ballX>=(padx - padLength/2) && ballX <=(padx+padLength/2)  ) ){
+					System.out.println("Top edge");
+					angle = 360.0 - angle;
+					blockMap.remove(temp.toString());
+					repaintBlocks = true;
+					return;
+				}
+		}
+	}
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
 		
 	}
 	

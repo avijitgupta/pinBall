@@ -59,8 +59,9 @@ public class Main extends Applet implements MouseMotionListener,MouseListener,  
 	public Image padBuffer;
 	public Image ballBufferPrevious;
 	public int blockSetWidth = 800;
-	public int blockSetHeight = 200;
+	public int blockSetHeight = 220;
 	public HashMap <String, Color> blockMap;
+	public HashMap <String, Color> immutableBlocks;
 	public int ballX;
 	public int ballY;
 	public int ballPreviousX;
@@ -76,6 +77,8 @@ public class Main extends Applet implements MouseMotionListener,MouseListener,  
     boolean gameComplete = false;
 	public void init() {
 		blockMap = new HashMap <String, Color>();
+		immutableBlocks = new HashMap <String, Color>();
+		
 		leftEdgeActive= rightEdgeActive= topEdgeActive= bottomEdgeActive = false;
 		this.resize(MaxX,MaxY);
 		this.setMaximumSize(new Dimension(MaxX,MaxY));
@@ -112,12 +115,73 @@ public class Main extends Applet implements MouseMotionListener,MouseListener,  
 				if(count%7 == 6)
 					blockMap.put(new Pair(x,y).toString(), Color.PINK );
 				
-				//System.out.println(x+ " "  + y + "#");
+				System.out.println(x+ " "  + y + "#");
 			}
 			
 		}
+		
+		//Adding immutable blocks
+		
+		
+		immutableBlocks.put(new Pair(820 - blockStartX, 240 - blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(820 - blockStartX, 220 - blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(820 - blockStartX, 200- blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(820 - blockStartX, 180- blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(820 - blockStartX, 160- blockStartY).toString(), Color.RED);
       //  System.out.println("Route");
 
+		immutableBlocks.put(new Pair(740 - blockStartX, 240 - blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(740 - blockStartX, 220 - blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(740 - blockStartX, 200- blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(740 - blockStartX, 180- blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(740 - blockStartX, 160- blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(700 - blockStartX, 240- blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(660 - blockStartX, 240- blockStartY).toString(), Color.RED);
+		
+		
+		immutableBlocks.put(new Pair(580 - blockStartX, 240 - blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(580 - blockStartX, 220 - blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(580 - blockStartX, 200- blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(580 - blockStartX, 180- blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(580 - blockStartX, 160- blockStartY).toString(), Color.RED);
+		
+		immutableBlocks.put(new Pair(500 - blockStartX, 240 - blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(500 - blockStartX, 220 - blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(500 - blockStartX, 200- blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(500 - blockStartX, 180- blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(500 - blockStartX, 160- blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(460 - blockStartX, 240- blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(420 - blockStartX, 220- blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(460 - blockStartX, 160- blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(420 - blockStartX, 180- blockStartY).toString(), Color.RED);
+		
+		
+		immutableBlocks.put(new Pair(340 - blockStartX, 240 - blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(340 - blockStartX, 220 - blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(340 - blockStartX, 200- blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(340 - blockStartX, 180- blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(340 - blockStartX, 160- blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(300 - blockStartX, 240 - blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(260 - blockStartX, 240- blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(300 - blockStartX, 200- blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(260 - blockStartX, 200- blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(300 - blockStartX, 160 - blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(260 - blockStartX, 160- blockStartY).toString(), Color.RED);
+		
+		
+		immutableBlocks.put(new Pair(180 - blockStartX, 240 - blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(180 - blockStartX, 220 - blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(180 - blockStartX, 200- blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(180 - blockStartX, 180- blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(180 - blockStartX, 160- blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(140 - blockStartX, 240- blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(100 - blockStartX, 240 - blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(100 - blockStartX, 220 - blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(100 - blockStartX, 200- blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(100 - blockStartX, 180- blockStartY).toString(), Color.RED);
+		immutableBlocks.put(new Pair(100 - blockStartX, 160- blockStartY).toString(), Color.RED);
+		
+		
 		repaintBlocks = true;
 		repaint();
 	    Thread t = new Thread(this, "Ball thread");
@@ -213,84 +277,7 @@ public class Main extends Applet implements MouseMotionListener,MouseListener,  
 		        ballGraphics.fillOval(4, 4, ballDiameter-8,ballDiameter-8); // whole line white
 		    	g.drawImage(ballBuffer,ballX,ballY, null);
 		}
-		else
-		{
-			// Black Paint
-			g.setColor(Color.BLACK);
-			g.fillRect(0, 0, MaxX, MaxY);
-			g.setColor(Color.RED);
-
-			ballX = 100;
-			ballY = 100;
-			int i;
-			for(i=0;i<50;i++)
-			{
-				g.fillOval(ballX + i, (ballY - i/4), ballDiameter, ballDiameter);
-				try {
-					Thread.sleep(10);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			
-			g.setColor(Color.MAGENTA);
-
-			for(i=50;i>=25;i--)
-			{
-				g.fillOval(ballX + i, (ballY - i/4), ballDiameter, ballDiameter);
-				try {
-					Thread.sleep(10);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			g.setColor(Color.BLUE);
-
-			for(i=0;i<100;i++)
-			{
-				g.fillOval(ballX +25, (ballY+i), ballDiameter, ballDiameter);
-				try {
-					Thread.sleep(10);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			
-			g.setColor(Color.GREEN);
-
-			for(i=0;i<25;i++)
-			{
-				g.fillOval(ballX +25 - i, (ballY + 102 + i/4), ballDiameter, ballDiameter);
-				try {
-					Thread.sleep(10);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			
-			g.setColor(Color.pink);
-
-			for(i=0;i<50;i++)
-			{
-				g.fillOval(ballX + i, (ballY +102 - i/4), ballDiameter, ballDiameter);
-				try {
-					Thread.sleep(10);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			ballX = 200;
-			ballY = 100;
-			
-			
-	        
-	        
-		}
+		
 	}
 	@Override
 	public void run() {
@@ -341,7 +328,9 @@ public class Main extends Applet implements MouseMotionListener,MouseListener,  
 				
 				if(top) bottomEdgeActive = false;
 				else topEdgeActive = false;
+				
 				Pair temp;
+				
 				if(leftEdgeActive){
 					int xBlockLeft = ((ballX- blockStartX) / blockLength)*blockLength ;
 					int yBlockLeft = ((ballY - blockStartY + ballDiameter/2) / blockHeight)*blockHeight ;
@@ -349,13 +338,21 @@ public class Main extends Applet implements MouseMotionListener,MouseListener,  
 					//Left Boundary Edge
 					 temp = new Pair(xBlockLeft, yBlockLeft);
 					if((blockMap.containsKey(temp.toString()) && (ballX >= blockStartX ) && (ballY >= blockStartY)  ) || ballX<=0){
-						//System.out.println("Left edge");
-						angle = 180.0 - angle;
-						blockMap.remove(temp.toString());
-						repaintBlocks = true;
-						return;
+						if(immutableBlocks.containsKey(temp.toString()) == false){
+							angle = 180.0 - angle;
+							blockMap.remove(temp.toString());
+							repaintBlocks = true;
+							return;
+						}
+						else{
+							angle = 180.0 - angle;
+							blockMap.put(temp.toString(), Color.RED);
+							repaintBlocks = true;
+							return;
+						}
 					}
 				}
+				
 				
 				if(rightEdgeActive){
 					int xBlockRight = ((ballX  - blockStartX + ballDiameter) / blockLength)*blockLength;
@@ -364,10 +361,21 @@ public class Main extends Applet implements MouseMotionListener,MouseListener,  
 					temp = new Pair(xBlockRight, yBlockRight);
 					if((blockMap.containsKey(temp.toString()) && (ballX  - blockStartX + ballDiameter > 0 ) && (ballY - blockStartY + ballDiameter/2 )>=0  ) || (ballX +ballDiameter)  >=MaxX){
 						//System.out.println("Right edge");
-						angle = 180.0 - angle;
-						blockMap.remove(temp.toString());
-						repaintBlocks = true;
-						return;
+						if(immutableBlocks.containsKey(temp.toString()) == false)
+						{
+							angle = 180.0 - angle;
+							blockMap.remove(temp.toString());
+							repaintBlocks = true;
+							return;
+						}
+						else
+						{
+							angle = 180.0 - angle;
+							blockMap.put(temp.toString(), Color.RED);
+							repaintBlocks = true;
+							return;
+						}
+					
 					}
 				}
 				if(topEdgeActive){
@@ -375,14 +383,22 @@ public class Main extends Applet implements MouseMotionListener,MouseListener,  
 					int yBlockTop = ((ballY- blockStartY) / blockHeight)*blockHeight ;
 					//top Boundary Edge
 					temp = new Pair(xBlockTop, yBlockTop);
-					System.out.println(temp.toString());
 					
 					if((blockMap.containsKey(temp.toString()) && (ballX >= blockStartX ) && (ballY >= blockStartY)  ) || (ballY -ballDiameter)  <=0){
-						System.out.println("Top edge");
+						if(immutableBlocks.containsKey(temp.toString()) == false){
 						angle = 360.0 - angle;
 						blockMap.remove(temp.toString());
 						repaintBlocks = true;
+						System.out.println("temp " + temp.toString());
+
 						return;
+						}
+						else{
+							angle = 360.0 - angle;
+							blockMap.put(temp.toString(), Color.RED);
+							repaintBlocks = true;
+							return;
+						}
 					}
 				}
 				if(bottomEdgeActive){
@@ -394,11 +410,18 @@ public class Main extends Applet implements MouseMotionListener,MouseListener,  
 							((( ( (ballY + ballDiameter) >=padTop && (ballY+ballDiameter) <=padBottom) )|| (ballY >=padTop && ballY <=padBottom) ) 
 							&& (ballX)>=(padx - padLength/2) && ballX <=(padx+padLength/2)  ) ){
 						
-						//System.out.println("Top edge");
+						if(immutableBlocks.containsKey(temp.toString()) == false){
 						angle = 360.0 - angle;
 						blockMap.remove(temp.toString());
 						repaintBlocks = true;
 						return;
+						}
+						else{
+							angle = 360.0 - angle;
+							blockMap.put(temp.toString(), Color.RED);
+							repaintBlocks = true;
+							return;
+						}
 					}
 				}
 		}
